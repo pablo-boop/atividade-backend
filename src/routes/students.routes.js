@@ -1,22 +1,27 @@
 import { Router } from "express";
+import {
+    deleteStudent,
+    getAllStudents,
+    getById,
+    postStudent,
+    updateStudent
+} from "../controllers/students.controller.js";
 
 const studentsRouter = Router();
 
-studentsRouter.get("/", (req, res) => {
-    return res.status(200).send({ message: "Rota GET all alunos" });
-});
+//GET
+studentsRouter.get("/", getAllStudents);
 
-studentsRouter.get("/:id", (req, res) => {
-    const { id } = req.params;
-    return res.status(200).send({ message: `Rota GET aluno por id: ${id}` });
-});
+//GET by ID
+studentsRouter.get("/:id", getById);
 
-studentsRouter.post("/", (req, res) => {
-    const { name, email, age } = req.body;
-    if(!name || !email || !age) {
-        return res.status(400).send({ message: "Dados inválidos!" })
-    }
-    return res.status(201).send({ message: "Rota POST alunos" });
-});
+//POST
+studentsRouter.post("/", postStudent);
+
+//PUT
+studentsRouter.put("/:id", updateStudent);
+
+//DELETE
+studentsRouter.delete("/:id", deleteStudent);
 
 export default studentsRouter;
